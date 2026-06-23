@@ -49,6 +49,12 @@
             <artifactId>j2mod</artifactId>
             <version>3.2.1</version>
         </dependency>
+        
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
 
         <!-- 테스트 -->
         <dependency>
