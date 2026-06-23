@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>FEMS 전력 모니터링</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    body { font-family: sans-serif; margin: 40px; color: #333; }
+    h1 { font-size: 22px; }
+    .cards { display: flex; gap: 16px; margin: 20px 0; }
+    .card { border: 1px solid #ddd; border-radius: 8px; padding: 16px 24px; }
+    .card .label { font-size: 13px; color: #888; }
+    .card .value { font-size: 28px; font-weight: bold; margin-top: 4px; }
+    canvas { max-width: 800px; border: 1px solid #ddd; border-radius: 8px; padding: 12px; }
+  </style>
+</head>
+<body>
+  <h1>FEMS 전력 모니터링</h1>
+  <p style="color:#888; font-size:13px;">3초마다 자동 새로고침</p>
+
+  <div class="cards">
+    <div class="card"><div class="label">전력</div><div class="value" id="power">-- W</div></div>
+    <div class="card"><div class="label">전류</div><div class="value" id="current">-- A</div></div>
+    <div class="card"><div class="label">전압</div><div class="value" id="voltage">-- V</div></div>
+  </div>
+
+  <canvas id="chart" height="200"></canvas>
+
+  <script>
+    const API = "http://localhost:8000";
+
+    const chart = new Chart(document.getElementById("chart"), {
+      type: "line",
+      data: { labels: [], datasets: [{
+        label: "전력 (W)", data: [],
+        borderColor: "#3b82f6", tension: 0.2, pointRadius: 0
+      }] },
+      options: { animation: false, scales: { y: { beginAtZero: true } } }
+    });
+
+    async function update() {
+      // 현재값
+      try {
+        const r = await fetch(API + "/api/latest");
+        const d = await r.json();
+        if (d.power_w != null) {
+          document.getElementById("power").textContent = Math.round(d.power_w) + " W";
+          document.getElementById("current").textContent = d.current_a.toFixed(1) + " A";
+          document.getElementById("voltage").textContent = d.voltage_v.toFixed(1) + " V";
+        }
+      } catch (e) { console.log("API 연결 안 됨", e); }
+
+      // 차트 데이터
+      try {
+        const r = await fetch(API + "/api/recent");
+        const rows = await r.json();
+        chart.data.labels = rows.map(x => new Date(x.ts).toLocaleTimeString("ko-KR"));
+        chart.data.datasets[0].data = rows.map(x => Math.round(x.power_w));
+        chart.update();
+      } catch (e) { /* 무시 */ }
+    }
+
+    update();
+    setInterval(update, 3000);
+  </script>
+</body>
+</html>
