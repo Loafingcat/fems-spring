@@ -1,7 +1,7 @@
 # FEMS 전력 모니터링 (Spring Boot)
 
 Modbus TCP로 전력계 데이터를 수집해 PostgreSQL에 저장하고 대시보드로 보여주는 시스템을,
-Java/Spring Boot로 구현한 버전입니다. (같은 기능의 Python 버전을 Spring Boot로 다시 만든 것)
+Java/Spring Boot로 구현한 버전입니다. 
 
 산업용 통신 프로토콜(Modbus)과 기업용 백엔드 프레임워크(Spring Boot)를 함께 다뤄보는 것이 목적입니다.
 
