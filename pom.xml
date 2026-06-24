@@ -20,7 +20,7 @@
     <description>FEMS 전력 모니터링 (Spring Boot)</description>
 
     <properties>
-        <java.version>21</java.version>
+        <java.version>17</java.version>
     </properties>
 
     <dependencies>
