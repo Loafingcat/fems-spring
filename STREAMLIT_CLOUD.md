@@ -1,9 +1,9 @@
 # Streamlit Cloud Demo
 
 This project is originally a Spring Boot FEMS sample that reads Modbus data and
-stores it in PostgreSQL. For Streamlit Cloud, use the standalone demo app in
-`streamlit/app.py` because Streamlit Cloud is not a good fit for running the
-Spring server, PostgreSQL, and Modbus simulator together.
+stores it in PostgreSQL. For Streamlit Cloud, use the standalone demo package in
+`streamlit/` because Streamlit Cloud is not a good fit for running the Spring
+server, PostgreSQL, and Modbus simulator together.
 
 ## Deploy Settings
 
@@ -11,6 +11,7 @@ Spring server, PostgreSQL, and Modbus simulator together.
 - Branch: `main`
 - Main file path: `streamlit/app.py`
 - Dependencies file: `streamlit/requirements.txt`
+- Streamlit config: `streamlit/.streamlit/config.toml`
 
 ## Local Check
 
